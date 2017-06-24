@@ -11,9 +11,9 @@ This a Deep learning AI system which recognize handwritten characters, Here I us
 
 Download handwritten dataset from [here](http://www.ee.surrey.ac.uk/CVSSP/demos/chars74k/EnglishHnd.tgz)
 
-It has only 55 samples for each classes, so I have written script to create duplicate images with different backgroud color. 
+It has only 55 samples for each class, so I have written script to create duplicate images with different backgroud color. 
 
-Once installed mongo db, clone this repository and create a virtualenv using below command
+Clone this repository and create a virtualenv using below command
 ```
 virtualenv venv
 source venv/bin/activate
