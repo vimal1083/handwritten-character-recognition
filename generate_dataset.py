@@ -19,21 +19,21 @@ def generate_variant(img_path, background, prefix):
     mask_inv = cv2.bitwise_not(mask)
     rows, cols, shape = img.shape
     # Create background image
-    bg_img = img.copy()
-    bg_img[0:rows, 0:cols] = background
-    fg_img = cv2.bitwise_or(img, img, mask=mask)
-    bg_img = cv2.bitwise_or(bg_img, bg_img, mask=mask_inv)
-    variant_wbg = cv2.add(fg_img, bg_img)
-    variant_gray = cv2.cvtColor(variant_wbg, cv2.COLOR_BGR2GRAY)
+    # bg_img = img.copy()
+    # bg_img[0:rows, 0:cols] = background
+    # fg_img = cv2.bitwise_or(img, img, mask=mask)
+    # bg_img = cv2.bitwise_or(bg_img, bg_img, mask=mask_inv)
+    # variant_wbg = cv2.add(fg_img, bg_img)
+    # variant_gray = cv2.cvtColor(variant_wbg, cv2.COLOR_BGR2GRAY)
 
     # blur the image
-    variant_blurred = blur_image(variant_gray)
+    variant_blurred = blur_image(mask_inv)
 
     # save variant image
     save_variant(variant_blurred, img_path, prefix)
 
 def blur_image(img):
-    return cv2.GaussianBlur(img, (3, 7), randint(0, 2))
+    return img # cv2.GaussianBlur(img, (3, 7), randint(0, 2))
 
 def get_background():
     background = (randint(110, 255), randint(110, 255), randint(110, 255))
@@ -53,8 +53,15 @@ def resize_all():
                 img_file = cv2.imread(img_path)
                 cv2.imwrite(img_path, cv2.resize(img_file, None, fx=0.025, fy=0.025))
 
+def delete_orig_image():
+    for folder in tqdm(glob(DATASET_LOCATION + '/*'), desc='Deleting Original Images'):
+        if os.path.isdir(folder):
+            for img_path in glob(folder + '/img*.png'):                
+                os.remove(img_path)
+
 if __name__ == '__main__':
     resize_all()
     for k in tqdm(range(10), desc='Completed iterations'):
         main()
+    delete_orig_image()
 
