@@ -4,6 +4,7 @@ import shutil
 import cv2
 from random import randint
 from tqdm import tqdm
+from functools import reduce
 
 DATASET_LOCATION = '/home/aspire/Downloads/RBL/English/Hnd/Img'
 
@@ -27,7 +28,7 @@ def generate_variant(img_path, background, prefix):
     # variant_gray = cv2.cvtColor(variant_wbg, cv2.COLOR_BGR2GRAY)
 
     # blur the image
-    variant_blurred = blur_image(mask_inv)
+    variant_blurred = blur_image(mask)
 
     # save variant image
     save_variant(variant_blurred, img_path, prefix)
